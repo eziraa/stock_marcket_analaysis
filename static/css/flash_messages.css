@@ -1,0 +1,52 @@
+/* Flash message container */
+.flash-messages {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 300px;
+}
+
+/* Flash message box */
+.flash-message {
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #fff;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Success message */
+.flash-success {
+    background-color: #4CAF50;
+}
+
+/* Error message */
+.flash-error {
+    background-color: #F44336;
+}
+
+/* Warning message */
+.flash-warning {
+    background-color: #FFC107;
+    color: #000;
+}
+
+/* Info message */
+.flash-info {
+    background-color: #2196F3;
+}
+
+/* Close button */
+.close-btn {
+    float: right;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
