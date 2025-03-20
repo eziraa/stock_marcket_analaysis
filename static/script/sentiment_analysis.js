@@ -28,13 +28,21 @@ export function fetchSentimentData() {
             }
 
             // Show the results
+            console.log(data)
             stockSymbol.textContent = symbol;
-            averageSentiment.textContent = data.average_sentiment.charAt(0).toUpperCase() + data.average_sentiment.slice(1);
+            // averageSentiment.textContent = data.average_sentiment?.toString().charAt(0).toUpperCase() + data.average_sentiment?.slice(1);
+            // Determine sentiment based on average_sentiment value
+            let sentimentText = 'Neutral'; // Default sentiment
+            if (data.average_sentiment > 0) {
+                sentimentText = 'Positive';
+            } else if (data.average_sentiment < 0) {
+                sentimentText = 'Negative';
+            }
+            averageSentiment.textContent = sentimentText;
 
             data.sentiment_details.forEach(item => {
                 const li = document.createElement('li');
-                li.textContent = item.title;
-
+                li.textContent = item.headline;
                 // Add color based on sentiment
                 if (item.sentiment === 'positive') {
                     li.classList.add('positive');

@@ -18,7 +18,7 @@ import { showFlashMessage } from "./flash_messages.js";
     .then(response => response.json())
     .then(data => {
         if (data.error) {
-            alert(data.error);
+            showFlashMessage(data.error, "error");
             return;
         }
 
