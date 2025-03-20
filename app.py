@@ -5,6 +5,11 @@ import requests
 from textblob import TextBlob
 from nltk.sentiment import SentimentIntensityAnalyzer
 import nltk
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 nltk.download("vader_lexicon")
 
@@ -13,8 +18,8 @@ sia = SentimentIntensityAnalyzer()
 
 app.secret_key = '0ksklf8rfsks'
 
-ALPHA_VANTAGE_API_KEY = "E675UAFI5MNUFS9A"
-NEWS_API_KEY = "37bc020a6e544a2d8c9468f37c2081c7"
+ALPHA_VANTAGE_API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY")
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
 
 nltk.download('vader_lexicon')
