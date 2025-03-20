@@ -5,37 +5,17 @@ import requests
 from textblob import TextBlob
 from nltk.sentiment import SentimentIntensityAnalyzer
 import nltk
-# import google.generativeai as genai
 
-# GEMINI_API_KEY = "AIzaSyDy0yU4PzJtVZ14MMY3O6I00SkCJ7L69mY"
-
-# genai.configure(api_key=GEMINI_API_KEY)
-
-# model = genai.GenerativeModel("gemini-pro")
-# # response = model.generate_content("What are the latest advancements in AI?")
-
-# # print(response.text)
-
-
-# Download VADER lexicon (Only needed once)
 nltk.download("vader_lexicon")
 
 app = Flask(__name__)
 sia = SentimentIntensityAnalyzer()
 
 app.secret_key = '0ksklf8rfsks'
-# Alpha Vantage API Key (replace with your own)
+
 ALPHA_VANTAGE_API_KEY = "E675UAFI5MNUFS9A"
 NEWS_API_KEY = "37bc020a6e544a2d8c9468f37c2081c7"
 
-# Set your Gemini API key
-
-
-# # Set up the API key
-# genai.configure(api_key=GEMINI_API_KEY)
-
-# # Example usage
-# model = genai.GenerativeModel("gemini-2.0-flash")
 
 nltk.download('vader_lexicon')
 
@@ -138,68 +118,6 @@ def get_stock_price(symbol):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# # Define the sentiment analysis function using Gemini AI
-# def analyze_sentiment_with_gemini(text):
-#     try:
-#         # Sending content to Gemini for sentiment analysis
-#         # response = client.models.generate_content(
-#         #     model="gemini-2.0-flash",  # Use the sentiment analysis model
-#         #     contents=text
-#         # )
-#         response = model.generate_content(text)
-
-
-#         # Extract the sentiment from the response (adjust according to Gemini's response structure)
-#         sentiment = response.text.strip()  # Adjust this based on Gemini's actual response format
-
-#         # Return the sentiment (Gemini should return 'positive', 'negative', 'neutral')
-#         return sentiment
-#     except Exception as e:
-#         print(f"Error during sentiment analysis: {str(e)}")
-#         return "neutral"  # Default sentiment if there's an error
-# # Endpoint to analyze sentiment of stock-related news articles
-# @app.route("/sentiment_analysis/<symbol>", methods=["GET"])
-# def make_sentiment_analysis(symbol):
-#     try:
-#         # Replace with your NewsAPI endpoint or any other news service API
-#         url = f"https://newsapi.org/v2/everything?q={symbol}&apiKey={NEWS_API_KEY}"
-#         response = requests.get(url)
-#         news = response.json().get("articles", [])
-        
-        
-#         if not news:
-#             flash("No aricles found for the symbol", "error")
-#             return jsonify({"error": "No articles found for the symbol"}), 404
-
-#         sentiment_scores = []
-#         for article in news:
-#             title = article.get("title", "")
-#             description = article.get("description", "")
-#             content = article.get("content", "")
-
-#             text = title + " " + description + " " + content
-#             sentiment = analyze_sentiment_with_gemini(text)
-#             sentiment_scores.append({
-#                 'title': article.get("title"),
-#                 'sentiment': sentiment
-#             })
-        
-#         avg_sentiment = 'neutral'  # Default if no valid sentiment score
-#         if sentiment_scores:
-#             sentiment_count = {"positive": 0, "neutral": 0, "negative": 0}
-#             for score in sentiment_scores:
-#                 sentiment_count[score['sentiment']] += 1
-
-#             # Determine overall sentiment (majority rule)
-#             avg_sentiment = max(sentiment_count, key=sentiment_count.get)
-
-#         return jsonify({"symbol": symbol, "average_sentiment": avg_sentiment, "sentiment_details": sentiment_scores})
-    
-#     except Exception as e:
-#         print(f"Error during sentiment analysis: {str(e)}")
-#         flash ("Error: " + str(e), "error")
-#         return jsonify({"error": str(e)}), 500
-
 
 
 # Fetch news articles from Yahoo Finance
@@ -216,7 +134,7 @@ def get_stock_news_endpoint(symbol):
     return jsonify(news_articles)
 
 # Perform sentiment analysis on news headlines
-def analyze_sentiment(news_articles):
+def analayze_news(news_articles):
     sentiment_results = []
     for article in news_articles:
         headline = article['content'].get("title", "No title available")
@@ -231,7 +149,7 @@ def sentiment_analysis_for(symbol):
     if not news_articles:
         return jsonify({"error": "No news found for this stock"}), 404
 
-    sentiment_results = analyze_sentiment(news_articles)
+    sentiment_results = analayze_news(news_articles)
     
     # Calculate average sentiment score
     avg_sentiment = sum([item["sentiment"] for item in sentiment_results]) / len(sentiment_results)
@@ -241,7 +159,8 @@ def sentiment_analysis_for(symbol):
         "average_sentiment": avg_sentiment,
         "sentiment_details": sentiment_results
     }
-    return render_template("sentiment_analysis.html")
+
+
 @app.route("/sentiment_analysis/<symbol>", methods=["GET"])
 def make_sentiment_analysis(symbol):
     return jsonify(sentiment_analysis_for(symbol))
