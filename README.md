@@ -83,6 +83,6 @@ MIT License
 Pull requests are welcome! Open an issue for bug fixes or feature requests.
 
 ## 📬 Contact
-- GitHub: [YOUR_USERNAME](https://github.com/YOUR_USERNAME)
-- Email: your.email@example.com
+- GitHub: [Ezira Tigab](https://github.com/eziraa)
+- Email: ezratgab@example.com
 
