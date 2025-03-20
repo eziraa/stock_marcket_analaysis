@@ -91,6 +91,16 @@ def get_stock_history(symbol):
         return jsonify({"error": str(e)}), 500
 
 
+# Fetch stock price using Alpha Vantage
+@app.route("/stock_price/<symbol>", methods=["GET"])
+def get_stock_price(symbol):
+    try:
+        ts = TimeSeries(key=ALPHA_VANTAGE_API_KEY, output_format="pandas")
+        data, _ = ts.get_quote_endpoint(symbol=symbol)
+        return jsonify(data.to_dict(orient="records")[0])
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == "__main__":
     app.run(debug=True)
 
