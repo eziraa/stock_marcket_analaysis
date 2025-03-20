@@ -1,10 +1,43 @@
-<nav>
-    <div class="logo">📈 StockAnalyzer</div>
-    <ul>
-        <li><a href="{{ url_for('home') }}">Home</a></li>
-        <li><a href="{{ url_for('stock_history') }}">Stock History</a></li>
-        <li><a href="{{ url_for('stock_price') }}">Stock Price</a></li>
-        <li><a href="{{ url_for('stock_sentiment') }}">Sentiment Analysis</a></li>
-        <li><a href="{{ url_for('stock_recommendation') }}">Recommendation</a></li>
-    </ul>
+<nav class="bg-blue-600 text-white shadow-md">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <!-- Logo -->
+            <a href="{{ url_for('home') }}" class="text-2xl font-bold flex items-center gap-2">
+                📈 StockAnalyzer
+            </a>
+
+            <!-- Nav Links (Hidden on Small Screens) -->
+            <ul class="hidden md:flex space-x-6">
+                <li><a href="{{ url_for('home') }}" class="hover:text-gray-300 transition">Home</a></li>
+                <li><a href="{{ url_for('stock_history') }}" class="hover:text-gray-300 transition">Stock History</a></li>
+                <li><a href="{{ url_for('stock_history') }}" class="hover:text-gray-300 transition">Stock Price</a></li>
+                <li><a href="{{ url_for('stock_history') }}" class="hover:text-gray-300 transition">Sentiment Analysis</a></li>
+                <li><a href="{{ url_for('stock_history') }}" class="hover:text-gray-300 transition">Recommendation</a></li>
+            </ul>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <ul class="flex flex-col space-y-2 bg-blue-700 p-4 rounded-lg">
+                <li><a href="{{ url_for('home') }}" class="block py-2 px-4 hover:bg-blue-500 rounded">Home</a></li>
+                <li><a href="{{ url_for('stock_history') }}" class="block py-2 px-4 hover:bg-blue-500 rounded">Stock History</a></li>
+                <li><a href="{{ url_for('stock_history') }}" class="block py-2 px-4 hover:bg-blue-500 rounded">Stock Price</a></li>
+                <li><a href="{{ url_for('stock_history') }}" class="block py-2 px-4 hover:bg-blue-500 rounded">Sentiment Analysis</a></li>
+                <li><a href="{{ url_for('stock_history') }}" class="block py-2 px-4 hover:bg-blue-500 rounded">Recommendation</a></li>
+            </ul>
+        </div>
+    </div>
 </nav>
+
+<script>
+    document.getElementById("mobile-menu-btn").addEventListener("click", function () {
+        document.getElementById("mobile-menu").classList.toggle("hidden");
+    });
+</script>
