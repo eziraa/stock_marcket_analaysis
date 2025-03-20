@@ -4,23 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Analysis</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     {% include 'navbar.html' %} <!-- Include navbar here -->
     {% include 'flash_messages.html' %} <!-- Include navbar here -->
-    <div class="container">
-        <h1>Stock Analysis Dashboard</h1>
-        <input type="text" id="symbolInput" placeholder="Enter Stock Symbol (e.g., AAPL)">
-        <button id="fetchButton" >Analyze</button>
-        
-        <div id="result" class="result-box hidden">
-            <h2>Stock Data</h2>
-            <p><strong>Symbol:</strong> <span id="stockSymbol"></span></p>
-            <p><strong>Latest Close Price:</strong> <span id="stockPrice"></span></p>
-            <p><strong>Sentiment Score:</strong> <span id="sentiment"></span></p>
-            <p><strong>Recommendation:</strong> <span id="recommendation"></span></p>
+    <div class="bg-white shadow-lg mt-6 rounded-2xl p-8 w-full max-w-xl">
+        <div class=" flex flex-col gap-4 items-start">
+            <h1 class="text-2xl font-bold text-center text-gray-800">📈 Stock Analysis Dashboard</h1>
+            <label for="symbolInput" class="block text-gray-600 font-medium mb-2">Enter Stock Symbol</label>
+            <div class="flex items-center space-x-4">
+                <!-- Styled Dropdown -->
+                <select id="symbolInput" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
+                    <option value="AAPL">Apple Inc. (AAPL)</option>
+                    <option value="GOOGL">Alphabet Inc. (GOOGL)</option>
+                    <option value="MSFT">Microsoft Corporation (MSFT)</option>
+                    <option value="AMZN">Amazon.com Inc. (AMZN)</option>
+                    <option value="TSLA">Tesla, Inc. (TSLA)</option>
+                    <option value="NVDA">NVIDIA Corporation (NVDA)</option>
+                    <option value="META">Meta Platforms, Inc. (META)</option>
+                    <option value="JPM">JPMorgan Chase & Co. (JPM)</option>
+                    <option value="GS">Goldman Sachs Group, Inc. (GS)</option>
+                    <option value="C">Citigroup Inc. (C)</option>
+                    <option value="BAC">Bank of America Corporation (BAC)</option>
+                    <option value="KO">Coca-Cola Company (KO)</option>
+                    <option value="PEP">PepsiCo, Inc. (PEP)</option>
+                    <option value="PG">Procter & Gamble Co. (PG)</option>
+                    <option value="WMT">Walmart Inc. (WMT)</option>
+                    <option value="MCD">McDonald's Corporation (MCD)</option>
+                    <option value="JNJ">Johnson & Johnson (JNJ)</option>
+                    <option value="PFE">Pfizer Inc. (PFE)</option>
+                    <option value="MRK">Merck & Co., Inc. (MRK)</option>
+                    <option value="ABT">Abbott Laboratories (ABT)</option>
+                    <option value="XOM">Exxon Mobil Corporation (XOM)</option>
+                    <option value="CVX">Chevron Corporation (CVX)</option>
+                    <option value="BP">BP plc (BP)</option>
+                    <option value="OXY">Occidental Petroleum Corporation (OXY)</option>
+                    <option value="F">Ford Motor Company (F)</option>
+                    <option value="GM">General Motors Company (GM)</option>
+                    <option value="TGT">Target Corporation (TGT)</option>
+                    <option value="COST">Costco Wholesale Corporation (COST)</option>
+                    <option value="VZ">Verizon Communications Inc. (VZ)</option>
+                    <option value="T">AT&T Inc. (T)</option>
+                    <option value="DIS">The Walt Disney Company (DIS)</option>
+                    <option value="NFLX">Netflix, Inc. (NFLX)</option>
+                    <option value="SPY">SPDR S&P 500 ETF Trust (SPY)</option>
+                    <option value="VXX">iPath Series B S&P 500 VIX Short-Term Futures ETN (VXX)</option>
+                </select>
+    
+                <!-- Styled Button -->
+                <button id="fetchStockButton" class="px-5 py-3 w-32 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300 disbled:cursor-not-allowed disbled:opacity-50">
+                    Fetch
+                </button>
+            </div>
+        </div>
+
+        <div id="result" class="hidden mt-8 bg-gray-50 p-6 rounded-xl shadow-md">
+            <h2 class="text-xl font-semibold text-gray-700 border-b pb-2">📊 Stock Data</h2>
+            <div class="mt-4 space-y-3">
+                <p class="text-gray-700"><strong class="text-gray-900">Symbol:</strong> <span id="stockSymbol" class="font-semibold text-blue-600"></span></p>
+                <p class="text-gray-700"><strong class="text-gray-900">Latest Close Price:</strong> <span id="stockPrice" class="font-semibold text-green-600"></span></p>
+                <p class="text-gray-700"><strong class="text-gray-900">Sentiment Score:</strong> <span id="sentiment" class="font-semibold text-yellow-600"></span></p>
+                <p class="text-gray-700"><strong class="text-gray-900">Recommendation:</strong> <span id="recommendation" class="font-semibold text-red-600"></span></p>
+            </div>
         </div>
     </div>
 

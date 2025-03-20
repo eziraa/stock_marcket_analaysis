@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 10px;
     display: flex;
+    padding-top: 20px;
     justify-content: start;
     align-items: center;
     height: 100vh;

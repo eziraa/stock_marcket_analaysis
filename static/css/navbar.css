@@ -1,5 +1,5 @@
 /* Reset styles */
-* {
+nav * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -8,6 +8,7 @@
 
 /* Navbar styles */
 nav {
+    width: 80%;
     background: #007bff;
     display: flex;
     justify-content: space-between;

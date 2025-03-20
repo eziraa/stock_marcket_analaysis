@@ -2,12 +2,15 @@ import { showFlashMessage } from "./flash_messages.js";
 
  export function fetchStockData() {
     const symbol = document.getElementById("symbolInput").value.trim().toUpperCase();
+    const fetchButton = document.getElementById("fetchStockButton");
     if (!symbol) {
         showFlashMessage("Please enter a stock symbol.", "error");
         return;
     }
 
-    fetch("/fetch_stock", {
+    fetchButton.disabled = true;
+    fetchButton.innerText = "Fetching...";
+    fetch("/fetch_stock_history", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ symbol: symbol })
@@ -19,6 +22,7 @@ import { showFlashMessage } from "./flash_messages.js";
             return;
         }
 
+    
         document.getElementById("stockSymbol").innerText = data.symbol;
         document.getElementById("stockPrice").innerText = data.latest_close;
         document.getElementById("sentiment").innerText = data.average_sentiment;
@@ -26,7 +30,14 @@ import { showFlashMessage } from "./flash_messages.js";
 
         document.getElementById("result").classList.remove("hidden");
     })
-    .catch(error => console.error("Error fetching stock data:", error));
+    .catch(error =>{
+        console.error("Error:", error);
+
+        showFlashMessage("An error occurred while fetching stock data.", error);
+    }).finally(()=>{
+        fetchButton.disabled = false;
+        fetchButton.innerText = "Fetch";
+    });
 }
 
-document.getElementById("fetchButton").addEventListener("click", fetchStockData);
+document.getElementById("fetchStockButton").addEventListener("click", fetchStockData);
