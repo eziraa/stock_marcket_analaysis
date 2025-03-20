@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Sentiment Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body >
+
+    {% include 'navbar.html' %} <!-- Include navbar here -->
+    {% include 'flash_messages.html' %} <!-- Include flash messages here -->
+    <div class="flex flex-col items-center justify-start">
+        <div class="max-w-3xl w-full bg-white shadow-lg rounded-lg p-6 mt-10">
+            <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Stock Sentiment Analysis</h1>
+
+            <!-- Input Section -->
+            <div class="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                <label for="symbolInput" class="text-gray-700 font-medium">Select Stock:</label>
+                <select id="symbolInput" class="w-full sm:w-2/3 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <option value="AAPL">Apple (AAPL)</option>
+                    <option value="TSLA">Tesla (TSLA)</option>
+                    <option value="GOOGL">Google (GOOGL)</option>
+                    <option value="AMZN">Amazon (AMZN)</option>
+                    <option value="MSFT">Microsoft (MSFT)</option>
+                </select>
+                <button id="fetchSentimentButton" 
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-md transition">
+                    Analyze Sentiment
+                </button>
+            </div>
+
+            <!-- Result Section -->
+            <div id="result" class="hidden mt-6 p-6 bg-gray-50 border-l-4 border-blue-500 rounded-lg shadow">
+                <h2 class="text-xl font-semibold text-gray-800 mb-3">Sentiment Analysis for <span id="stockSymbol" class="text-blue-600"></span></h2>
+                <div id="sentimentDetails">
+                    <h3 class="text-lg font-medium text-gray-700">Average Sentiment: <span id="averageSentiment" class="font-semibold text-green-600"></span></h3>
+                    <ul id="sentimentList" class="list-disc list-inside text-gray-600 mt-2"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="{{ url_for('static', filename='script/sentiment_analysis.js') }}"></script>
+</body>
+</html>
