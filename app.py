@@ -5,6 +5,16 @@ import requests
 from textblob import TextBlob
 from nltk.sentiment import SentimentIntensityAnalyzer
 import nltk
+# import google.generativeai as genai
+
+# GEMINI_API_KEY = "AIzaSyDy0yU4PzJtVZ14MMY3O6I00SkCJ7L69mY"
+
+# genai.configure(api_key=GEMINI_API_KEY)
+
+# model = genai.GenerativeModel("gemini-pro")
+# # response = model.generate_content("What are the latest advancements in AI?")
+
+# # print(response.text)
 
 
 # Download VADER lexicon (Only needed once)
@@ -19,7 +29,6 @@ ALPHA_VANTAGE_API_KEY = "E675UAFI5MNUFS9A"
 NEWS_API_KEY = "37bc020a6e544a2d8c9468f37c2081c7"
 
 # Set your Gemini API key
-GEMINI_API_KEY = "AIzaSyDy0yU4PzJtVZ14MMY3O6I00SkCJ7L69mY"
 
 
 # # Set up the API key
@@ -54,6 +63,11 @@ def stock_price():
 @app.route("/sentiment_analysis", methods=["GET"])
 def sentiment_analysis():
     return render_template("sentiment_analysis.html")
+
+# Stock Recommendation (Buy, Sell, Hold)
+@app.route("/stock_recommendation", methods=["GET"])
+def stock_recommendation():
+    return render_template("stock_recommendation.html")
 
 # Get stock detail data
 @app.route("/get_stock_data", methods=["POST"])
@@ -210,9 +224,8 @@ def analyze_sentiment(news_articles):
         sentiment_results.append({"headline": headline, "sentiment": sentiment_score})
     return sentiment_results
 
-@app.route("/sentiment_analysis/<symbol>", methods=["GET"])
-def make_sentiment_analysis(symbol):
-    # symbol = request.args.get("symbol", default="AAPL")  # Default: AAPL
+
+def sentiment_analysis_for(symbol):
     news_articles = get_stock_news(symbol)
 
     if not news_articles:
@@ -223,11 +236,42 @@ def make_sentiment_analysis(symbol):
     # Calculate average sentiment score
     avg_sentiment = sum([item["sentiment"] for item in sentiment_results]) / len(sentiment_results)
 
-    return jsonify({
+    return {
         "symbol": symbol,
         "average_sentiment": avg_sentiment,
         "sentiment_details": sentiment_results
-    })
+    }
+    return render_template("sentiment_analysis.html")
+@app.route("/sentiment_analysis/<symbol>", methods=["GET"])
+def make_sentiment_analysis(symbol):
+    return jsonify(sentiment_analysis_for(symbol))
+
+# Stock Recommendation (Buy, Sell, Hold)
+@app.route("/recommendation/<symbol>", methods=["GET"])
+def stock_recommendation_for(symbol):
+    try:
+        stock = yf.Ticker(symbol)
+        hist = stock.history(period="1mo")["Close"]
+        if len(hist) < 2:
+            return jsonify({"error": "Not enough data"}), 400
+        
+        latest_close = hist.iloc[-1]
+        previous_close = hist.iloc[-2]
+        change = (latest_close - previous_close) / previous_close
+
+        sentiment_resp = sentiment_analysis_for(symbol)
+        sentiment = sentiment_resp["average_sentiment"]
+
+        if change > 0.02 and sentiment > 0.2:
+            recommendation = "Buy"
+        elif change < -0.02 and sentiment < -0.2:
+            recommendation = "Sell"
+        else:
+            recommendation = "Hold"
+
+        return jsonify({"symbol": symbol, "recommendation": recommendation})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == "__main__":
