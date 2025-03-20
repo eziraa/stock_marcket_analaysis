@@ -73,7 +73,7 @@ GET /sentiment/GOOGL
 ```
 ### Deployement
 
-[See](https://stock-marcket-analaysis.onrender.com)
+[See](https://stock-market-analysis-vu5f.onrender.com)
 
 
 ## 📜 License
