@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Checker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    {% include 'navbar.html' %} <!-- Include navbar here -->
+
+    <div class="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Stock Price Checker 💹</h1>
+
+        <!-- Input Section -->
+        <div class="flex items-center space-x-4">
+            <!-- Styled Dropdown -->
+            <select id="symbolInput" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
+                <option value="AAPL">Apple Inc. (AAPL)</option>
+                <option value="GOOGL">Alphabet Inc. (GOOGL)</option>
+                <option value="MSFT">Microsoft Corporation (MSFT)</option>
+                <option value="AMZN">Amazon.com Inc. (AMZN)</option>
+                <option value="TSLA">Tesla, Inc. (TSLA)</option>
+                <option value="NVDA">NVIDIA Corporation (NVDA)</option>
+                <option value="META">Meta Platforms, Inc. (META)</option>
+                <option value="JPM">JPMorgan Chase & Co. (JPM)</option>
+                <option value="GS">Goldman Sachs Group, Inc. (GS)</option>
+                <option value="C">Citigroup Inc. (C)</option>
+                <option value="BAC">Bank of America Corporation (BAC)</option>
+                <option value="KO">Coca-Cola Company (KO)</option>
+                <option value="PEP">PepsiCo, Inc. (PEP)</option>
+                <option value="PG">Procter & Gamble Co. (PG)</option>
+                <option value="WMT">Walmart Inc. (WMT)</option>
+                <option value="MCD">McDonald's Corporation (MCD)</option>
+                <option value="JNJ">Johnson & Johnson (JNJ)</option>
+                <option value="PFE">Pfizer Inc. (PFE)</option>
+                <option value="MRK">Merck & Co., Inc. (MRK)</option>
+                <option value="ABT">Abbott Laboratories (ABT)</option>
+                <option value="XOM">Exxon Mobil Corporation (XOM)</option>
+                <option value="CVX">Chevron Corporation (CVX)</option>
+                <option value="BP">BP plc (BP)</option>
+                <option value="OXY">Occidental Petroleum Corporation (OXY)</option>
+                <option value="F">Ford Motor Company (F)</option>
+                <option value="GM">General Motors Company (GM)</option>
+                <option value="TGT">Target Corporation (TGT)</option>
+                <option value="COST">Costco Wholesale Corporation (COST)</option>
+                <option value="VZ">Verizon Communications Inc. (VZ)</option>
+                <option value="T">AT&T Inc. (T)</option>
+                <option value="DIS">The Walt Disney Company (DIS)</option>
+                <option value="NFLX">Netflix, Inc. (NFLX)</option>
+                <option value="SPY">SPDR S&P 500 ETF Trust (SPY)</option>
+                <option value="VXX">iPath Series B S&P 500 VIX Short-Term Futures ETN (VXX)</option>
+            </select>
+            <button 
+                id="fetchStockPriceButton"
+                class="bg-blue-600 hover:bg-blue-700 text-white w-32 px-6 py-3 rounded-lg shadow-md transition"
+                >
+                Get Price
+            </button>
+        </div>
+
+        <!-- Result Section -->
+        <div id="result" class="hidden mt-6 p-6 bg-gray-50 border-l-4 border-blue-500 rounded-lg shadow">
+            <h2 class="text-xl font-semibold text-gray-800 mb-3">Stock Price for <span id="stockSymbol" class="text-blue-600"></span></h2>
+            <p class="text-gray-700"><strong>Price:</strong> $<span id="stockPrice"></span></p>
+            <p class="text-gray-700"><strong>High:</strong> $<span id="stockHigh"></span></p>
+            <p class="text-gray-700"><strong>Low:</strong> $<span id="stockLow"></span></p>
+            <p class="text-gray-700"><strong>Volume:</strong> <span id="stockVolume"></span></p>
+        </div>
+    </div>
+
+    <script type="module" src="{{ url_for('static', filename='script/stock_price.js') }}"></script>
+</body>
+</html>

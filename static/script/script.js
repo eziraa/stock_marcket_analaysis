@@ -10,7 +10,7 @@ import { showFlashMessage } from "./flash_messages.js";
 
     fetchButton.disabled = true;
     fetchButton.innerText = "Fetching...";
-    fetch("/fetch_stock_history", {
+    fetch("/get_stock_data", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ symbol: symbol })
@@ -32,8 +32,7 @@ import { showFlashMessage } from "./flash_messages.js";
     })
     .catch(error =>{
         console.error("Error:", error);
-
-        showFlashMessage("An error occurred while fetching stock data.", error);
+        showFlashMessage("An error occurred while fetching stock data.", "error");
     }).finally(()=>{
         fetchButton.disabled = false;
         fetchButton.innerText = "Fetch";
