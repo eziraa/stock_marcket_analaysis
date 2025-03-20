@@ -124,7 +124,7 @@ def get_stock_price(symbol):
 def get_stock_news(symbol):
     stock = yf.Ticker(symbol)
     news = stock.news  # Fetch recent news articles
-    return news[:5] if news else []  # Limit to 5 articles
+    return news[:10] if news else []  # Limit to 5 articles
 
 @app.route("/stock_news/<symbol>", methods=["GET"])
 def get_stock_news_endpoint(symbol):

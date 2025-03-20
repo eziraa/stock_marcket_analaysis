@@ -30,8 +30,7 @@ export function fetchSentimentData() {
             // Show the results
             console.log(data)
             stockSymbol.textContent = symbol;
-            // averageSentiment.textContent = data.average_sentiment?.toString().charAt(0).toUpperCase() + data.average_sentiment?.slice(1);
-            // Determine sentiment based on average_sentiment value
+
             let sentimentText = 'Neutral'; // Default sentiment
             if (data.average_sentiment > 0) {
                 sentimentText = 'Positive';
@@ -44,10 +43,12 @@ export function fetchSentimentData() {
                 const li = document.createElement('li');
                 li.textContent = item.headline;
                 // Add color based on sentiment
-                if (item.sentiment === 'positive') {
+                if (item.sentiment > 0) {
                     li.classList.add('positive');
-                } else if (item.sentiment === 'negative') {
+                    li.style.color = 'green';
+                } else if (item.sentiment < 0) {
                     li.classList.add('negative');
+                    li.style.color = 'red';
                 } else {
                     li.classList.add('neutral');
                 }
