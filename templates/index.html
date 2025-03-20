@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+</head>
+<body>
+    {% include 'navbar.html' %} <!-- Include navbar here -->
+    {% include 'flash_messages.html' %} <!-- Include navbar here -->
+    <div class="container">
+        <h1>Stock Analysis Dashboard</h1>
+        <input type="text" id="symbolInput" placeholder="Enter Stock Symbol (e.g., AAPL)">
+        <button id="fetchButton" >Analyze</button>
+        
+        <div id="result" class="result-box hidden">
+            <h2>Stock Data</h2>
+            <p><strong>Symbol:</strong> <span id="stockSymbol"></span></p>
+            <p><strong>Latest Close Price:</strong> <span id="stockPrice"></span></p>
+            <p><strong>Sentiment Score:</strong> <span id="sentiment"></span></p>
+            <p><strong>Recommendation:</strong> <span id="recommendation"></span></p>
+        </div>
+    </div>
+
+    <script  type="module" src="{{ url_for('static', filename='script/script.js') }}"></script>
+</body>
+</html>
+
