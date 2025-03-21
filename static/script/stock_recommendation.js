@@ -18,6 +18,9 @@ export function fetchRecommendation() {
             showFlashMessage(data.error, 'error');
             return;
         }
+        else{
+            showFlashMessage("Stock recommendation fetched successfully.", 'success');
+        }
 
         document.getElementById("stockSymbol").innerText = symbol;
         document.getElementById("recommendation").innerText = data.recommendation;

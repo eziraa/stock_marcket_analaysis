@@ -17,6 +17,9 @@ export function fetchStockPrice() {
             showFlashMessage(data.error, "error");
             return;
         }
+        else{
+            showFlashMessage("Stock data fetched successfully.", "success");
+        }
 
         document.getElementById("stockSymbol").innerText = symbol;
         document.getElementById("stockPrice").innerText = parseFloat(data["05. price"]).toFixed(2);

@@ -23,8 +23,11 @@ export function fetchSentimentData() {
         .then(response => response.json())
         .then(data => {
             if (data.error) {
-                alert(data.error);
+                showFlashMessage(data.error, 'error');
                 return;
+            }
+            else{
+                showFlashMessage('Sentiment data fetched successfully.', 'success');
             }
 
             // Show the results

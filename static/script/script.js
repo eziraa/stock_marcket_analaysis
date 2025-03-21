@@ -21,13 +21,14 @@ import { showFlashMessage } from "./flash_messages.js";
             showFlashMessage(data.error, "error");
             return;
         }
-
+        else{
+            showFlashMessage("Stock data fetched successfully.", "success");
+        }
     
         document.getElementById("stockSymbol").innerText = data.symbol;
         document.getElementById("stockPrice").innerText = data.latest_close;
         document.getElementById("sentiment").innerText = data.average_sentiment;
         document.getElementById("recommendation").innerText = data.recommendation;
-
         document.getElementById("result").classList.remove("hidden");
     })
     .catch(error =>{

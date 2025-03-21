@@ -22,8 +22,6 @@ ALPHA_VANTAGE_API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY")
 NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
 
-nltk.download('vader_lexicon')
-
 @app.route("/success")
 def success():
     flash("Your operation was successful!", "success")
@@ -62,7 +60,7 @@ def get_stock_data():
         if not symbol:
             flash("Stock symbol is required", "error")
             return redirect(url_for("home"))
-
+        
         stock = yf.Ticker(symbol)
         hist = stock.history(period="1mo")
         hist.index = hist.index.strftime("%Y-%m-%d")
@@ -139,7 +137,7 @@ def get_stock_news_endpoint(symbol):
     return jsonify(news_articles)
 
 # Perform sentiment analysis on news headlines
-def analayze_news(news_articles):
+def sentiment_analysis_on_news(news_articles):
     sentiment_results = []
     for article in news_articles:
         headline = article['content'].get("title", "No title available")
@@ -148,13 +146,14 @@ def analayze_news(news_articles):
     return sentiment_results
 
 
+
 def sentiment_analysis_for(symbol):
     news_articles = get_stock_news(symbol)
 
     if not news_articles:
         return jsonify({"error": "No news found for this stock"}), 404
 
-    sentiment_results = analayze_news(news_articles)
+    sentiment_results = sentiment_analysis_on_news(news_articles)
     
     # Calculate average sentiment score
     avg_sentiment = sum([item["sentiment"] for item in sentiment_results]) / len(sentiment_results)

@@ -14,6 +14,13 @@ export function fetchStockData() {
     fetch(`/stock_history/${symbol}`)
         .then(response => response.json())
         .then(data => {
+            if(data.error){
+                showFlashMessage(data.error, "error");
+                return;
+            }
+            else{
+                showFlashMessage("Stock data fetched successfully.", "success");
+            }
             let tableBody = document.querySelector("#stockTable tbody");
             let stockSymbolSpan = document.getElementById("stockSymbol");
             let resultBox = document.getElementById("result");
